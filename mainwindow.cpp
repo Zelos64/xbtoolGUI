@@ -451,6 +451,23 @@ void MainWindow::ReplaceArchiveDialog()
     inputFileEdit      ->setReadOnly(true);
     outputPathEdit     ->setReadOnly(true);
 
+    QGridLayout *gridDialog = new QGridLayout(&dialog);
+        gridDialog->addWidget(arhlabel,           0, 0);
+        gridDialog->addWidget(ardlabel,           1, 0);
+        gridDialog->addWidget(inputFileLabel,     2, 0);
+        gridDialog->addWidget(outputPathLabel,    3, 0);
+
+        gridDialog->addWidget(arhPathEdit,        0, 1, 1, 2);
+        gridDialog->addWidget(ardPathEdit,        1, 1, 1, 2);
+        gridDialog->addWidget(inputFileEdit,      2, 1, 1, 2);
+        gridDialog->addWidget(outputPathEdit,     3, 1, 1, 2);
+
+        gridDialog->addWidget(inputArchiveBrowse, 0, 3, 2, 2);
+        gridDialog->addWidget(inputFileBrowse,    2, 3, 1, 2);
+
+        gridDialog->addWidget(okButton,           6, 3);
+        gridDialog->addWidget(cancelButton,       6, 4);
+
     arhPathEdit        ->setMinimumWidth(300);
     ardPathEdit        ->setMinimumWidth(300);
     inputFileEdit      ->setMinimumWidth(300);
@@ -467,23 +484,6 @@ void MainWindow::ReplaceArchiveDialog()
     outputPathEdit     ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     inputArchiveBrowse ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     inputFileBrowse    ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-    QGridLayout *gridDialog = new QGridLayout(&dialog);
-    gridDialog->addWidget(arhlabel,           0, 0);
-    gridDialog->addWidget(ardlabel,           1, 0);
-    gridDialog->addWidget(inputFileLabel,     2, 0);
-    gridDialog->addWidget(outputPathLabel,    3, 0);
-
-    gridDialog->addWidget(arhPathEdit,        0, 1, 1, 2);
-    gridDialog->addWidget(ardPathEdit,        1, 1, 1, 2);
-    gridDialog->addWidget(inputFileEdit,      2, 1, 1, 2);
-    gridDialog->addWidget(outputPathEdit,     3, 1, 1, 2);
-
-    gridDialog->addWidget(inputArchiveBrowse, 0, 3, 2, 2);
-    gridDialog->addWidget(inputFileBrowse,    2, 3, 1, 2);
-
-    gridDialog->addWidget(okButton,           6, 3);
-    gridDialog->addWidget(cancelButton,       6, 4);
 
     QFileDialog fileDialog(&dialog);
     fileDialog.setWindowTitle("Add the .ard / .arh path");
@@ -656,6 +656,19 @@ void MainWindow::DecryptBdatDialog()
     inputFileEdit    ->setReadOnly(true);
     outputFileEdit   ->setReadOnly(true);
 
+    QGridLayout *gridDialog = new QGridLayout(&dialog);
+        gridDialog->addWidget(inputFileLabel,   0, 0);
+        gridDialog->addWidget(outputFileLabel,  1, 0);
+
+        gridDialog->addWidget(inputFileEdit,    0, 1, 1, 2);
+        gridDialog->addWidget(outputFileEdit,   1, 1, 1, 2);
+
+        gridDialog->addWidget(inputFileBrowse,  0, 3, 1, 2);
+        gridDialog->addWidget(outputFileBrowse, 1, 3, 1, 2);
+
+        gridDialog->addWidget(okButton,         2, 3);
+        gridDialog->addWidget(cancelButton,     2, 4);
+
     inputFileEdit    ->setMinimumWidth(300);
     outputFileEdit   ->setMinimumWidth(300);
 
@@ -668,19 +681,6 @@ void MainWindow::DecryptBdatDialog()
     outputFileEdit   ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     inputFileBrowse  ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     outputFileBrowse ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-    QGridLayout *gridDialog = new QGridLayout(&dialog);
-    gridDialog->addWidget(inputFileLabel,   0, 0);
-    gridDialog->addWidget(outputFileLabel,  1, 0);
-
-    gridDialog->addWidget(inputFileEdit,    0, 1, 1, 2);
-    gridDialog->addWidget(outputFileEdit,   1, 1, 1, 2);
-
-    gridDialog->addWidget(inputFileBrowse,  0, 3, 1, 2);
-    gridDialog->addWidget(outputFileBrowse, 1, 3, 1, 2);
-
-    gridDialog->addWidget(okButton,         2, 3);
-    gridDialog->addWidget(cancelButton,     2, 4);
 
     connect(inputFileBrowse, &QPushButton::clicked, &dialog, [&]()
     {
