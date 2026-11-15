@@ -39,7 +39,8 @@ public:
     QString archiveName;
     QString commandBDAT;
     QString commandInput;
-    QString programOGpath = QDir("../../../XbTool").absoluteFilePath("XbTool.exe");
+    // This path work only because it's a debug build
+    QString programOGpath = QDir("../../../../Xenoforge-dependencies/XbTool").absoluteFilePath("XbTool.exe");
 
     QString currentExplorerFolder;
 

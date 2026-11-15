@@ -303,7 +303,7 @@ void MainWindow::ExtractArchiveDialog()
 
                 if (inputArchive.isEmpty())
                     { QMessageBox::warning(&dialog, "Missing files", "No file selected"); }
-                else if (!QFileInfo::exists(QDir(absolutePath).filePath(baseName + ".arh")) && QFileInfo::exists(QDir(absolutePath).filePath(baseName + ".arh")))
+                else if (!QFileInfo::exists(QDir(absolutePath).filePath(baseName + ".arh")) && QFileInfo::exists(QDir(absolutePath).filePath(baseName + ".ard")))
                     { QMessageBox::warning(&dialog, "Missing file", ".arh missing"); }
                 else if (QFileInfo::exists(QDir(absolutePath).filePath(baseName + ".arh")) && !QFileInfo::exists(QDir(absolutePath).filePath(baseName + ".ard")))
                     { QMessageBox::warning(&dialog, "Missing file", ".ard missing"); }
@@ -509,7 +509,7 @@ void MainWindow::ReplaceArchiveDialog()
 
                 if (inputArchive.isEmpty())
                     { QMessageBox::warning(&dialog, "Missing files", "No file selected"); }
-                else if (!QFileInfo::exists(QDir(absolutePath).filePath(baseName + ".arh")) && QFileInfo::exists(QDir(absolutePath).filePath(baseName + ".arh")))
+                else if (!QFileInfo::exists(QDir(absolutePath).filePath(baseName + ".arh")) && QFileInfo::exists(QDir(absolutePath).filePath(baseName + ".ard")))
                     { QMessageBox::warning(&dialog, "Missing file", ".arh missing"); }
                 else if (QFileInfo::exists(QDir(absolutePath).filePath(baseName + ".arh")) && !QFileInfo::exists(QDir(absolutePath).filePath(baseName + ".ard")))
                     { QMessageBox::warning(&dialog, "Missing file", ".ard missing"); }
