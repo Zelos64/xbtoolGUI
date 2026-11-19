@@ -22,12 +22,14 @@
 #include <QRegularExpression>
 #include <QScrollBar>
 #include <QScreen>
+#include <QStackedWidget>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 private slots:
+    void onHomeButtonClicked(QString);
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -50,7 +52,7 @@ public:
 
 private:
     QWidget *centralWidget;
-    QStackedLayout *stack;
+    QStackedWidget *stack;
     void ExtractArchiveDialog();
     void ReplaceArchiveDialog();
     void DecryptBdatDialog();

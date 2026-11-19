@@ -10,85 +10,39 @@ MainWindow::MainWindow(QWidget *parent)
     bolditalic.setItalic(true);
 
     setCentralWidget(centralWidget);
-
-    QStackedLayout *stack = new QStackedLayout(centralWidget); //stock all the menus
+    stack = new QStackedWidget(centralWidget); // stock all the menus
     QWidget *home = new QWidget();
     QGridLayout *gridLayout = new QGridLayout(home);
-        QLabel *choiceGame = new QLabel("Choose game :", this);
+    QLabel *choiceGame = new QLabel("Choose game :", this);
 
-        xb1 = new QPushButton("Xenoblade 1", this);
-        connect(xb1, &QPushButton::clicked, this, [this, stack]()
-        {
-            commandGame = "xb1";
-            ExtractArchive->setEnabled(false);
-            ReplaceArchive->setEnabled(false);
-            stack->setCurrentIndex(1);
-            CSGedit->setText("Current selected game : " + commandGame);
-        });
+    xb1   = new QPushButton("Xenoblade 1", this);
+    xb1de = new QPushButton("Xenoblade 1 DE", this);
+    xb2   = new QPushButton("Xenoblade 2", this);
+    xb3   = new QPushButton("Xenoblade 3", this);
+    xbx   = new QPushButton("Xenoblade X", this);
+    xbxde = new QPushButton("Xenoblade X DE", this);
 
-        xb1de = new QPushButton("Xenoblade 1 DE", this);
-        connect(xb1de, &QPushButton::clicked, this, [this, stack]()
-        {
-            commandGame = "xb1de";
-            ExtractArchive->setEnabled(false);
-            ReplaceArchive->setEnabled(false);
-            GenerateDropTables->setEnabled(true);
-            stack->setCurrentIndex(1);
-            CSGedit->setText("Current selected game : " + commandGame);
-        });
+    connect(xb1,   &QPushButton::clicked, this, [this]{MainWindow::onHomeButtonClicked("xb1");});
+    connect(xb1de, &QPushButton::clicked, this, [this]{MainWindow::onHomeButtonClicked("xb1de");});
+    connect(xb2,   &QPushButton::clicked, this, [this]{MainWindow::onHomeButtonClicked("xb2");});
+    connect(xb3,   &QPushButton::clicked, this, [this]{MainWindow::onHomeButtonClicked("xb3");});
+    connect(xbx,   &QPushButton::clicked, this, [this]{MainWindow::onHomeButtonClicked("xbx");});
+    connect(xbxde, &QPushButton::clicked, this, [this]{MainWindow::onHomeButtonClicked("xbxde");});
 
-        xb2 = new QPushButton("Xenoblade 2", this);
-        connect(xb2, &QPushButton::clicked, this, [this, stack]()
-        {
-            commandGame = "xb2";
-            archiveName = "bf2";
-            CreateBlade->setEnabled(true);
-            ReadSave->setEnabled(true);
-            DecompressIraSave->setEnabled(true);
-            stack->setCurrentIndex(1);
-            CSGedit->setText("Current selected game : " + commandGame);
-        });
+    xb1   ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    xb1de ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    xb2   ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    xb3   ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    xbx   ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    xbxde ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-        xb3 = new QPushButton("Xenoblade 3", this);
-        connect(xb3, &QPushButton::clicked, this, [this, stack]()
-        {
-            commandGame = "xb3";
-            archiveName = "bf3";
-            stack->setCurrentIndex(1);
-            CSGedit->setText("Current selected game : " + commandGame);
-        });
-
-        xbx = new QPushButton("Xenoblade X", this);
-        connect(xbx, &QPushButton::clicked, this, [this, stack]()
-        {
-            commandGame = "xbx";
-            stack->setCurrentIndex(1);
-            CSGedit->setText("Current selected game : " + commandGame);
-        });
-
-        xbxde = new QPushButton("Xenoblade X DE", this);
-        connect(xbxde, &QPushButton::clicked, this, [this, stack]()
-        {
-            commandGame = "xbxde";
-            archiveName = "sts";
-            stack->setCurrentIndex(1);
-            CSGedit->setText("Current selected game : " + commandGame);
-        });
-
-        xb1   ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        xb1de ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        xb2   ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        xb3   ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        xbx   ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        xbxde ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-        gridLayout->addWidget(choiceGame, 0, 0, 1, 2);
-        gridLayout->addWidget(xb1,        1, 0);
-        gridLayout->addWidget(xb1de,      1, 1);
-        gridLayout->addWidget(xb2,        2, 0);
-        gridLayout->addWidget(xb3,        2, 1);
-        gridLayout->addWidget(xbx,        3, 0);
-        gridLayout->addWidget(xbxde,      3, 1);
+    gridLayout->addWidget(choiceGame, 0, 0, 1, 2);
+    gridLayout->addWidget(xb1,        1, 0);
+    gridLayout->addWidget(xb1de,      1, 1);
+    gridLayout->addWidget(xb2,        2, 0);
+    gridLayout->addWidget(xb3,        2, 1);
+    gridLayout->addWidget(xbx,        3, 0);
+    gridLayout->addWidget(xbxde,      3, 1);
 
     stack->addWidget(home);
 
@@ -100,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         QPushButton *backToGameList = new QPushButton("Back");
             backToGameList->setMaximumWidth(60);
-            connect(backToGameList, &QPushButton::clicked, this, [this, stack]()
+            connect(backToGameList, &QPushButton::clicked, this, [this]()
             {
                 commandGame = "";
                 archiveName = "";
@@ -217,10 +171,112 @@ MainWindow::MainWindow(QWidget *parent)
     stack->addWidget(task);
     stack->setCurrentIndex(0);
 
+    setCentralWidget(stack);
+    // resize(sizeHint()); will replace the line below when the layout task will be correctly defined
     setFixedSize(sizeHint());
     QScreen *screen = QGuiApplication::primaryScreen();
     QRect screenRect = screen->availableGeometry();
     this->move(screenRect.center() - this->rect().center());
+}
+
+void MainWindow::onHomeButtonClicked(QString commandGame)
+{
+    if (commandGame == "xb1") {
+        // Nothing to activate currently, as far as idk which task is doable
+        ExtractArchive->setEnabled(false);
+        ReplaceArchive->setEnabled(false);
+
+        DescrambleScript->setEnabled(false);
+        ExtractWilay->setEnabled(false);
+
+        CreateBlade->setEnabled(false);
+        ReadSave->setEnabled(false);
+        DecompressIraSave->setEnabled(false);
+
+        GenerateDropTables->setEnabled(false);
+    }
+    else if (commandGame == "xb1de") {
+        ExtractArchive->setEnabled(false);
+        ReplaceArchive->setEnabled(false);
+
+        DescrambleScript->setEnabled(false);
+        ExtractWilay->setEnabled(false);
+
+        CreateBlade->setEnabled(false);
+        ReadSave->setEnabled(false);
+        DecompressIraSave->setEnabled(false);
+
+        GenerateDropTables->setEnabled(true);
+    }
+    else if (commandGame == "xb2") {
+        archiveName = "bf2";
+        ExtractArchive->setEnabled(true);
+        ReplaceArchive->setEnabled(true);
+
+        DescrambleScript->setEnabled(false);
+        ExtractWilay->setEnabled(false);
+
+        CreateBlade->setEnabled(true);
+        ReadSave->setEnabled(true);
+        DecompressIraSave->setEnabled(true);
+
+        GenerateDropTables->setEnabled(false);
+    }
+    else if (commandGame == "xb3") {
+        archiveName = "bf3";
+        ExtractArchive->setEnabled(true);
+        ReplaceArchive->setEnabled(true);
+
+        DescrambleScript->setEnabled(false);
+        ExtractWilay->setEnabled(false);
+
+        CreateBlade->setEnabled(false);
+        ReadSave->setEnabled(false);
+        DecompressIraSave->setEnabled(false);
+
+        GenerateDropTables->setEnabled(false);
+    }
+    else if (commandGame == "xbx") {
+        ExtractArchive->setEnabled(false);
+        ReplaceArchive->setEnabled(false);
+
+        DescrambleScript->setEnabled(false);
+        ExtractWilay->setEnabled(false);
+
+        CreateBlade->setEnabled(false);
+        ReadSave->setEnabled(false);
+        DecompressIraSave->setEnabled(false);
+
+        GenerateDropTables->setEnabled(false);
+    }
+    else if (commandGame == "xbxde") {
+        archiveName = "sts";
+        ExtractArchive->setEnabled(true);
+        ReplaceArchive->setEnabled(true);
+
+        DescrambleScript->setEnabled(false);
+        ExtractWilay->setEnabled(false);
+
+        CreateBlade->setEnabled(false);
+        ReadSave->setEnabled(false);
+        DecompressIraSave->setEnabled(false);
+
+        GenerateDropTables->setEnabled(false);
+    }
+    else {
+        // crash the software
+    }
+
+    DecryptBdat->setEnabled(true);
+    BdatCodeGen->setEnabled(true);
+    Bdat2Html->setEnabled(true);
+    Bdat2Json->setEnabled(true);
+    Bdat2Psql->setEnabled(true);
+    GenerateData->setEnabled(true);
+
+    CSGedit->setText("Current selected game : " + commandGame);
+    stack->setCurrentIndex(1);
+    qDebug() << commandGame;
 }
 
 void MainWindow::ExtractArchiveDialog()
@@ -520,18 +576,6 @@ void MainWindow::ReplaceArchiveDialog()
                 }
             }
         }
-    });
-
-    connect(inputFileBrowse, &QPushButton::clicked, &dialog, [&]()
-    {
-        // Réécrire pour que ça prenne un fichier au lieu d'un dossier
-        QString inputFile = QFileDialog::getOpenFileName
-        (
-            &dialog,
-            "Choose the input file",
-            QStandardPaths::writableLocation(QStandardPaths::HomeLocation), //Open the dialog at the user's folder
-            "All files (*.*)"
-        );
     });
 
     connect(inputFileBrowse, &QPushButton::clicked, &dialog, [&]()
